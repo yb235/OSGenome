@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 GENETIC YOLO TERMINAL - STONKS IN YOUR DNA 🧬</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Orbitron', monospace;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* MATRIX RAIN BACKGROUND */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.1;
+        }
+
+        /* ANIMATED BACKGROUND */
+        .dna-helix {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,0,255,0.03) 2px, rgba(255,0,255,0.03) 4px);
+            animation: dnaRotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* GLITCH EFFECT */
+        @keyframes glitch {
+            0%, 100% { text-shadow: 2px 0 red, -2px 0 cyan; }
+            25% { text-shadow: -2px 0 red, 2px 0 cyan; }
+            50% { text-shadow: 2px 0 cyan, -2px 0 red; }
+            75% { text-shadow: 0 2px red, 0 -2px cyan; }
+        }
+
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* HEADER */
+        .main-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: clamp(1.5rem, 5vw, 4rem);
+            font-family: 'Press Start 2P', cursive;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* TERMINAL WINDOW */
+        .terminal {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(0, 20, 0, 0.95);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            box-shadow: 
+                0 0 40px #0f0,
+                inset 0 0 40px rgba(0,255,0,0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #0f0;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* STOCK TICKER */
+        .ticker {
+            background: #111;
+            border: 1px solid #0f0;
+            padding: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-item {
+            display: inline-block;
+            margin: 0 30px;
+            font-weight: bold;
+        }
+
+        .up { color: #0f0; }
+        .down { color: #f00; }
+
+        /* BUTTONS */
+        .yolo-btn {
+            background: linear-gradient(45deg, #ff00ff, #00ff00, #ffff00);
+            background-size: 200% 200%;
+            animation: buttonGlow 2s ease infinite;
+            border: none;
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            padding: 20px 40px;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,255,0,0.5);
+            transition: all 0.3s;
+            margin: 20px;
+        }
+
+        @keyframes buttonGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .yolo-btn:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 0 50px rgba(255,255,0,0.8);
+        }
+
+        .yolo-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* UPLOAD ZONE */
+        .upload-zone {
+            border: 3px dashed #0f0;
+            border-radius: 20px;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 40px 0;
+            background: rgba(0,255,0,0.02);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            border-color: #ff0;
+            background: rgba(255,255,0,0.05);
+            box-shadow: 0 0 30px rgba(255,255,0,0.3);
+        }
+
+        .upload-zone.dragover {
+            background: rgba(255,0,255,0.1);
+            border-color: #f0f;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* RESULTS PANEL */
+        .results-panel {
+            display: none;
+            background: rgba(255,0,255,0.1);
+            border: 2px solid #f0f;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 0 40px rgba(255,0,255,0.5);
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border-left: 4px solid #0f0;
+            transition: all 0.3s;
+        }
+
+        .metric:hover {
+            transform: translateX(10px);
+            border-left-color: #ff0;
+            box-shadow: 0 0 20px rgba(255,255,0,0.3);
+        }
+
+        .metric-bar {
+            width: 200px;
+            height: 30px;
+            background: #111;
+            border: 1px solid #0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f00, #ff0, #0f0);
+            transition: width 2s ease;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* TRADING PROFILE */
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,255,255,0.1));
+            border: 2px solid #0ff;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: "💎🙌";
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+        }
+
+        .profile-title {
+            font-size: 2rem;
+            font-family: 'Press Start 2P', cursive;
+            color: #ff0;
+            text-shadow: 2px 2px 4px rgba(255,0,255,0.5);
+            margin-bottom: 20px;
+        }
+
+        /* LEADERBOARD */
+        .leaderboard {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #ff0;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(90deg, rgba(255,255,0,0.1), transparent);
+            border-left: 3px solid #ff0;
+            transition: all 0.3s;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(90deg, rgba(255,255,0,0.2), transparent);
+        }
+
+        .rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff0;
+        }
+
+        /* MEME QUOTES */
+        .meme-quote {
+            position: fixed;
+            padding: 10px 20px;
+            background: rgba(255,255,0,0.9);
+            color: #000;
+            font-weight: bold;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatAway 3s ease forwards;
+        }
+
+        @keyframes floatAway {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        /* ROCKET ANIMATION */
+        .rocket {
+            position: fixed;
+            font-size: 50px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        @keyframes rocketLaunch {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* CONFETTI */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 1000;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* LOADING ANIMATION */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .dna-spinner {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border: 4px solid rgba(0,255,0,0.1);
+            border-top: 4px solid #0f0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .disclaimer {
+            color: #f00;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-bg"></canvas>
+    <div class="dna-helix"></div>
+
+    <h1 class="main-header">
+        🚀 YOLOING INTO GENETICS, BOYS<br>
+        GME FOR YOUR GENES 🧬💎🙌
+    </h1>
+
+    <div class="terminal">
+        <!-- STOCK TICKER -->
+        <div class="ticker">
+            <div class="ticker-content">
+                <span class="ticker-item up">DNA ▲ +420.69%</span>
+                <span class="ticker-item down">PAPER ▼ -99.99%</span>
+                <span class="ticker-item up">DIAMOND ▲ +1337%</span>
+                <span class="ticker-item up">APE ▲ +69%</span>
+                <span class="ticker-item down">HEDGIE ▼ -∞%</span>
+                <span class="ticker-item up">YOLO ▲ TO THE MOON</span>
+                <span class="ticker-item up">HODL ▲ +♾️%</span>
+            </div>
+        </div>
+
+        <!-- INTRO TEXT -->
+        <div style="text-align: center; padding: 30px; font-size: 1.2rem;">
+            <p style="color: #ff0; margin-bottom: 20px;">
+                🦍 SMOOTH-BRAIN APE DETECTED 🦍
+            </p>
+            <p style="margin-bottom: 20px;">
+                Drop your <span style="color: #f0f;">23andMe</span> / <span style="color: #0ff;">AncestryDNA</span> file
+            </p>
+            <p style="color: #0f0;">
+                Our quantum ape brain (trained on Buffet's toenail clippings) will analyze your stonk genes
+            </p>
+        </div>
+
+        <!-- UPLOAD ZONE -->
+        <div class="upload-zone" id="uploadZone">
+            <div style="font-size: 80px; margin-bottom: 20px;">🧬</div>
+            <h2 style="font-family: 'Press Start 2P', cursive; color: #ff0; margin-bottom: 20px;">
+                DROP YOUR GENETIC TENDIES HERE
+            </h2>
+            <input type="file" id="fileInput" style="display: none;" accept=".txt,.csv,.zip">
+            <button class="yolo-btn" onclick="document.getElementById('fileInput').click()">
+                UPLOAD DNA 🚀
+            </button>
+            <p style="margin-top: 20px; color: #0ff;">
+                or drag & drop like you're buying the dip
+            </p>
+        </div>
+
+        <!-- LOADING -->
+        <div class="loading" id="loading">
+            <div class="dna-spinner"></div>
+            <h3 style="margin-top: 20px; color: #ff0;">ANALYZING YOUR APE GENOME...</h3>
+            <p style="color: #0f0; margin-top: 10px;">Consulting the sacred scrolls of r/WSB...</p>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="results-panel" id="results">
+            <h2 style="text-align: center; font-family: 'Press Start 2P', cursive; color: #ff0; margin-bottom: 30px;">
+                🎯 GENETIC STONK ANALYSIS COMPLETE 🎯
+            </h2>
+
+            <div class="metric">
+                <span>🦍 APE STRENGTH INDEX</span>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="apeStrength" style="width: 0%;"></div>
+                </div>
+                <span id="apeValue">0%</span>
+            </div>
+
+            <div class="metric">
+                <span>💎 DIAMOND HANDS GENE</span>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="diamondHands" style="width: 0%;"></div>
+                </div>
+                <span id="diamondValue">0%</span>
+            </div>
+
+            <div class="metric">
+                <span>📄 PAPER HANDS RISK</span>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="paperHands" style="width: 0%; background: linear-gradient(90deg, #0f0, #ff0, #f00);"></div>
+                </div>
+                <span id="paperValue">0%</span>
+            </div>
+
+            <div class="metric">
+                <span>🚀 YOLO PROPENSITY</span>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="yoloProp" style="width: 0%;"></div>
+                </div>
+                <span id="yoloValue">0%</span>
+            </div>
+
+            <div class="metric">
+                <span>🧠 WRINKLE BRAIN FACTOR</span>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="wrinkleBrain" style="width: 0%;"></div>
+                </div>
+                <span id="wrinkleValue">0%</span>
+            </div>
+
+            <div class="profile-card">
+                <h3 class="profile-title" id="profileTitle">LOADING...</h3>
+                <p style="font-size: 1.5rem; color: #0ff; margin: 20px 0;" id="profileDesc"></p>
+                <div style="font-size: 3rem; margin: 20px 0;" id="profileEmoji"></div>
+                <p style="color: #ff0; font-size: 1.2rem;" id="profileAdvice"></p>
+            </div>
+        </div>
+
+        <!-- LEADERBOARD -->
+        <div class="leaderboard" id="leaderboard" style="display: none;">
+            <h2 style="text-align: center; font-family: 'Press Start 2P', cursive; color: #ff0; margin-bottom: 20px;">
+                🏆 GENETIC YOLO LEADERBOARD 🏆
+            </h2>
+            <div id="leaderboardContent"></div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div style="text-align: center; margin: 40px 0; display: none;" id="actionButtons">
+            <button class="yolo-btn" onclick="shareResults()">
+                SHARE TO WSB 📢
+            </button>
+            <button class="yolo-btn" onclick="downloadCertificate()">
+                GET CERTIFICATE 📜
+            </button>
+            <button class="yolo-btn" onclick="location.reload()">
+                ANALYZE ANOTHER 🔄
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="disclaimer">
+            ⚠️ NOT FINANCIAL OR MEDICAL ADVICE. WE EAT CRAYONS. ⚠️
+        </p>
+        <p style="margin-top: 10px;">
+            Powered by quantum ape technology and Wendy's tendies 🍗
+        </p>
+        <p style="margin-top: 10px; font-size: 0.6rem;">
+            Side effects may include: uncontrollable urge to buy high sell low, 
+            diamond hand syndrome, and excessive rocket emoji usage 🚀🚀🚀
+        </p>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "YOLO GME AMC HODL DIAMOND APE MOON TENDIE DRS YEET 420 69 ";
+        const matrixArray = matrix.split("");
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // Meme quotes
+        const memeQuotes = [
+            "This is the way 🚀",
+            "Apes together strong 🦍",
+            "Buy the dip! 📈",
+            "HODL! 💎🙌",
+            "To the moon! 🌙",
+            "Not financial advice 🤷",
+            "Smooth brain energy 🧠",
+            "Tendies incoming 🍗",
+            "Can't stop won't stop 🎮",
+            "Wife's boyfriend approved ✅",
+            "Sir, this is a Wendy's 🍔",
+            "Money printer go brrr 💸",
+            "Stonks only go up 📊",
+            "YOLO! 🎲",
+            "GUH! 😱"
+        ];
+
+        function showMemeQuote(x, y) {
+            const quote = memeQuotes[Math.floor(Math.random() * memeQuotes.length)];
+            const div = document.createElement('div');
+            div.className = 'meme-quote';
+            div.textContent = quote;
+            div.style.left = x + 'px';
+            div.style.top = y + 'px';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 3000);
+        }
+
+        // Random meme quotes
+        setInterval(() => {
+            if(Math.random() > 0.7) {
+                showMemeQuote(
+                    Math.random() * window.innerWidth,
+                    Math.random() * window.innerHeight
+                );
+            }
+        }, 5000);
+
+        // File upload handling
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if(files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            console.log('File uploaded:', file.name);
+            
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            uploadZone.style.display = 'none';
+            
+            // Launch rocket
+            launchRocket();
+            
+            // Confetti
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => createConfetti(), i * 50);
+            }
+            
+            // Simulate processing
+            setTimeout(() => {
+                showResults();
+            }, 3000);
+        }
+
+        function launchRocket() {
+            const rocket = document.createElement('div');
+            rocket.className = 'rocket';
+            rocket.textContent = '🚀';
+            rocket.style.left = Math.random() * window.innerWidth + 'px';
+            rocket.style.animation = 'rocketLaunch 2s ease-out forwards';
+            document.body.appendChild(rocket);
+            setTimeout(() => rocket.remove(), 2000);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff0', '#0f0', '#f0f', '#0ff', '#f00'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        function showResults() {
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('results').style.display = 'block';
+            
+            // Generate random results
+            const apeStr = 75 + Math.random() * 25;
+            const diamond = 60 + Math.random() * 40;
+            const paper = Math.random() * 30;
+            const yolo = 70 + Math.random() * 30;
+            const wrinkle = Math.random() * 50;
+            
+            // Animate bars
+            setTimeout(() => {
+                document.getElementById('apeStrength').style.width = apeStr + '%';
+                document.getElementById('apeValue').textContent = Math.floor(apeStr) + '%';
+                
+                document.getElementById('diamondHands').style.width = diamond + '%';
+                document.getElementById('diamondValue').textContent = Math.floor(diamond) + '%';
+                
+                document.getElementById('paperHands').style.width = paper + '%';
+                document.getElementById('paperValue').textContent = Math.floor(paper) + '%';
+                
+                document.getElementById('yoloProp').style.width = yolo + '%';
+                document.getElementById('yoloValue').textContent = Math.floor(yolo) + '%';
+                
+                document.getElementById('wrinkleBrain').style.width = wrinkle + '%';
+                document.getElementById('wrinkleValue').textContent = Math.floor(wrinkle) + '%';
+            }, 100);
+            
+            // Generate profile
+            const profiles = [
+                {
+                    title: "ULTIMATE DIAMOND HANDED APE",
+                    desc: "Your genes literally can't sell",
+                    emoji: "💎🦍💎",
+                    advice: "Destined for Valhalla or Wendy's, no in-between"
+                },
+                {
+                    title: "YOLO MOMENTUM CHAD",
+                    desc: "Born to buy peaks, allergic to profits",
+                    emoji: "🚀📈🔥",
+                    advice: "Your DNA says 'what's an exit strategy?'"
+                },
+                {
+                    title: "QUANTUM OPTIONS DEGEN",
+                    desc: "0DTE is literally in your blood",
+                    emoji: "🎲⚡🎰",
+                    advice: "Your chromosomes spell out 'GUH'"
+                },
+                {
+                    title: "FOMO GENETIC MUTATION",
+                    desc: "Physically unable to miss any pump",
+                    emoji: "😱💸🏃",
+                    advice: "Your ancestors YOLOed on tulips"
+                },
+                {
+                    title: "TENDIE TRANSCENDENT",
+                    desc: "Evolved beyond mortal profit-taking",
+                    emoji: "🍗👁️🍗",
+                    advice: "Your mitochondria produces pure hopium"
+                }
+            ];
+            
+            const profile = profiles[Math.floor(Math.random() * profiles.length)];
+            document.getElementById('profileTitle').textContent = profile.title;
+            document.getElementById('profileDesc').textContent = profile.desc;
+            document.getElementById('profileEmoji').textContent = profile.emoji;
+            document.getElementById('profileAdvice').textContent = profile.advice;
+            
+            // Show leaderboard
+            setTimeout(() => {
+                showLeaderboard();
+                document.getElementById('actionButtons').style.display = 'block';
+            }, 2000);
+        }
+
+        function showLeaderboard() {
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.style.display = 'block';
+            
+            const leaders = [
+                { rank: 1, name: "DeepFuckingGenes", score: 99.99, title: "Literally Can't Lose" },
+                { rank: 2, name: "ElonSpermDonor", score: 96.69, title: "Mars Colony Founder" },
+                { rank: 3, name: "HarambeReborn", score: 94.20, title: "Eternal Diamond Hands" },
+                { rank: 4, name: "CathieWoodsDNA", score: 91.37, title: "Innovation Incarnate" },
+                { rank: 5, name: "You", score: Math.floor(80 + Math.random() * 15), title: "Freshly Analyzed Ape" }
+            ];
+            
+            const content = document.getElementById('leaderboardContent');
+            leaders.forEach(leader => {
+                const item = document.createElement('div');
+                item.className = 'leaderboard-item';
+                item.innerHTML = `
+                    <span class="rank">#${leader.rank}</span>
+                    <span style="color: #0ff;">${leader.name}</span>
+                    <span style="color: #f0f;">${leader.title}</span>
+                    <span style="color: #0f0; font-weight: bold;">${leader.score}%</span>
+                `;
+                content.appendChild(item);
+            });
+        }
+
+        function shareResults() {
+            alert("YOUR GENETIC YOLO SCORE HAS BEEN POSTED TO:\n\n" +
+                  "✅ r/wallstreetbets\n" +
+                  "✅ Your wife's boyfriend\n" +
+                  "✅ The SEC (they can't stop us)\n" +
+                  "✅ Citadel's nightmares\n\n" +
+                  "APES TOGETHER STRONG! 🦍💪");
+            
+            // More rockets
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => launchRocket(), i * 200);
+            }
+        }
+
+        function downloadCertificate() {
+            const cert = `
+╔══════════════════════════════════════════════╗
+║     CERTIFICATE OF GENETIC DEGENERACY        ║
+║                                               ║
+║  This certifies that YOUR DNA has been       ║
+║  scientifically proven to be:                ║
+║                                               ║
+║     💎 DIAMOND HANDED                        ║
+║     🦍 SMOOTH BRAINED                        ║
+║     🚀 MOON DESTINED                         ║
+║                                               ║
+║  Valid until: HEAT DEATH OF UNIVERSE         ║
+║  Signed: DFV's Left Testicle                 ║
+╚══════════════════════════════════════════════╝
+            `;
+            
+            const blob = new Blob([cert], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'GENETIC_YOLO_CERTIFICATE.txt';
+            a.click();
+        }
+
+        // Konami code easter egg
+        let konamiCode = [];
+        const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if(konamiCode.join(',') === konamiPattern.join(',')) {
+                document.body.style.animation = 'glitch 0.1s infinite';
+                alert("🚀🚀🚀 INFINITE MONEY GLITCH ACTIVATED 🚀🚀🚀\n\nJK SEC, this is a joke");
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 3000);
+                
+                // Launch 100 rockets
+                for(let i = 0; i < 100; i++) {
+                    setTimeout(() => launchRocket(), i * 50);
+                }
+            }
+        });
+
+        // Random glitch effects
+        setInterval(() => {
+            if(Math.random() > 0.95) {
+                const elements = document.querySelectorAll('h1, h2, h3');
+                const element = elements[Math.floor(Math.random() * elements.length)];
+                element.classList.add('glitch');
+                setTimeout(() => element.classList.remove('glitch'), 300);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

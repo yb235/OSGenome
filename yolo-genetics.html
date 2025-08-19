@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLOING INTO GENETICS, BOYS — GME FOR YOUR GENES 🔬🚀</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #00ff41;
+            --dark-bg: #0a0e1a;
+            --darker-bg: #050810;
+            --purple-accent: #9945ff;
+            --red-loss: #ff3838;
+            --wsb-orange: #ff4500;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Orbitron', monospace;
+            background: var(--dark-bg);
+            color: var(--neon-green);
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><text y="20" font-size="20">💎</text></svg>'), auto;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0e1a 25%, transparent 25%), 
+                        linear-gradient(-45deg, #0a0e1a 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #0a0e1a 75%), 
+                        linear-gradient(-45deg, transparent 75%, #0a0e1a 75%);
+            background-size: 30px 30px;
+            background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+            animation: bgMove 10s linear infinite;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0 0, 0 15px, 15px -15px, -15px 0px; }
+            100% { background-position: 30px 30px, 30px 45px, 45px 15px, 15px 30px; }
+        }
+
+        .dna-helix {
+            position: fixed;
+            width: 100px;
+            height: 100%;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .dna-helix:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .dna-helix:nth-child(2) { left: 30%; animation-delay: 5s; }
+        .dna-helix:nth-child(3) { left: 50%; animation-delay: 10s; }
+        .dna-helix:nth-child(4) { left: 70%; animation-delay: 15s; }
+        .dna-helix:nth-child(5) { left: 90%; animation-delay: 20s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 900;
+            text-align: center;
+            background: linear-gradient(45deg, #00ff41, #ff4500, #9945ff, #00ff41);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .upload-btn {
+            font-size: 1.8rem;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(45deg, var(--neon-green), var(--purple-accent));
+            border: none;
+            border-radius: 50px;
+            color: var(--dark-bg);
+            font-weight: bold;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-btn:before {
+            content: '🚀';
+            position: absolute;
+            font-size: 3rem;
+            animation: rocketFly 3s linear infinite;
+        }
+
+        @keyframes rocketFly {
+            0% { left: -50px; bottom: -50px; }
+            100% { left: 110%; bottom: 110%; }
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 50px var(--neon-green);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 255, 65, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title:before,
+        .section-title:after {
+            content: '💎';
+            position: absolute;
+            font-size: 2rem;
+            animation: spin 3s linear infinite;
+        }
+
+        .section-title:before { left: -50px; }
+        .section-title:after { right: -50px; }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* How It Works */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid var(--neon-green);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.3);
+            background: rgba(0, 255, 65, 0.2);
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--purple-accent);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .step-emoji {
+            font-size: 3rem;
+            margin: 1rem 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Progress Bar */
+        .rocket-progress {
+            position: relative;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            margin: 3rem 0;
+            overflow: hidden;
+        }
+
+        .rocket-track {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            animation: rocketMove 5s linear infinite;
+        }
+
+        @keyframes rocketMove {
+            0% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        /* Discovery Cards */
+        .discovery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .discovery-card {
+            background: linear-gradient(135deg, rgba(153, 69, 255, 0.1), rgba(0, 255, 65, 0.1));
+            border: 2px solid var(--purple-accent);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .discovery-card:hover {
+            transform: rotate(-2deg) scale(1.05);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 30px var(--neon-green);
+        }
+
+        .meter {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--red-loss), var(--wsb-orange), var(--neon-green));
+            border-radius: 15px;
+            animation: meterGrow 2s ease-out;
+        }
+
+        @keyframes meterGrow {
+            0% { width: 0; }
+            100% { width: var(--fill); }
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 3px dashed var(--neon-green);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: rgba(0, 255, 65, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: var(--purple-accent);
+            transform: scale(1.02);
+        }
+
+        .upload-zone.dragover {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: var(--purple-accent);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .terminal-text {
+            font-family: 'Courier New', monospace;
+            color: var(--neon-green);
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        /* Results Preview */
+        .results-preview {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--neon-green);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stonkience-score {
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(45deg, var(--neon-green), var(--purple-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .counter {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--darker-bg);
+            border-top: 2px solid var(--neon-green);
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2rem;
+        }
+
+        .ticker-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ticker-link {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 5px;
+            text-decoration: none;
+            color: var(--neon-green);
+            font-family: monospace;
+            transition: all 0.3s;
+        }
+
+        .ticker-link:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            transform: scale(1.1);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--neon-green);
+            animation: confettiFall 3s linear;
+            z-index: 9999;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Moon Animation */
+        .moon-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem;
+            animation: toTheMoon 3s ease-out;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @keyframes toTheMoon {
+            0% {
+                transform: translate(-50%, 100vh) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -200vh) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* Stock Ticker */
+        .stock-ticker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--neon-green);
+            padding: 0.5rem;
+            font-family: monospace;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: tickerScroll 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-item {
+            margin: 0 2rem;
+        }
+
+        .gain { color: var(--neon-green); }
+        .loss { color: var(--red-loss); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-title:before,
+            .section-title:after {
+                display: none;
+            }
+            
+            .steps-container,
+            .discovery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-rocket {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            animation: rocketLaunch 2s ease-out infinite;
+            z-index: 9999;
+        }
+
+        @keyframes rocketLaunch {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            50% {
+                transform: translate(-50%, -150%) rotate(180deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Chart Animation */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin: 2rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--neon-green);
+            animation: drawChart 3s ease-out;
+        }
+
+        @keyframes drawChart {
+            0% {
+                transform: scaleX(0);
+                transform-origin: left;
+            }
+            100% {
+                transform: scaleX(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-animation"></div>
+    <div class="dna-helix">🧬</div>
+    <div class="dna-helix">🧬</div>
+    <div class="dna-helix">🧬</div>
+    <div class="dna-helix">🧬</div>
+    <div class="dna-helix">🧬</div>
+
+    <!-- Stock Ticker -->
+    <div class="stock-ticker">
+        <div class="ticker-content">
+            <span class="ticker-item">GME <span class="gain">+420.69%</span> 🚀</span>
+            <span class="ticker-item">AMC <span class="gain">+69.42%</span> 🍿</span>
+            <span class="ticker-item">PLTR <span class="loss">-13.37%</span> 📉</span>
+            <span class="ticker-item">TSLA <span class="gain">+42.00%</span> ⚡</span>
+            <span class="ticker-item">DNA <span class="gain">+999.99%</span> 🧬</span>
+            <span class="ticker-item">ROPE <span class="loss">-99.99%</span> 💀</span>
+            <span class="ticker-item">YOLO <span class="gain">+∞%</span> 💎</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="main-title">YOLOING INTO GENETICS, BOYS — GME FOR YOUR GENES 🔬🚀</h1>
+        <p class="tagline">Upload your DNA and figure out if you're a paper-handed pansy or a giga-chad with diamond hands 💎🙌</p>
+        <button class="upload-btn" onclick="scrollToUpload()">UPLOAD YOUR GENETIC TENDIES</button>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+        <h2 class="section-title">How This Autism Works</h2>
+        <div class="rocket-progress">
+            <div class="rocket-track">🚀</div>
+        </div>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-emoji">🧬</div>
+                <h3>Upload DNA</h3>
+                <p>Drop your 23andMe/AncestryDNA file like it's a hot meme stock</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-emoji">🧠</div>
+                <h3>Quantum Ape Analysis</h3>
+                <p>Our smooth brain AI analyzes your stonk genes with crayon-powered algorithms</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-emoji">🤖</div>
+                <h3>Buffet's Toenails</h3>
+                <p>AI trained on Warren Buffet's toenail clippings processes your genetic tendies</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">04</div>
+                <div class="step-emoji">📈</div>
+                <h3>Get Tendies</h3>
+                <p>Receive your genetic trading profile and prepare for Valhalla</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You'll Discover -->
+    <section class="section">
+        <h2 class="section-title">What You'll Discover</h2>
+        <div class="discovery-grid">
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>🎲 Risk Tolerance</h3>
+                <p>Beta Cuck vs Giga-Chad Scale</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 85%;"></div>
+                </div>
+                <p class="terminal-text">> CHAD_LEVEL: MAXIMUM</p>
+            </div>
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>💎 Trading Style</h3>
+                <p>Paper Hands vs Diamond Hands Meter</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 95%;"></div>
+                </div>
+                <p class="terminal-text">> HANDS: LITERAL_DIAMONDS</p>
+            </div>
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>🎰 Investment Personality</h3>
+                <p>Boomer Value vs YOLO Weekly FDs</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 69%;"></div>
+                </div>
+                <p class="terminal-text">> TYPE: 0DTE_OPTIONS_ADDICT</p>
+            </div>
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>😱 Panic Sell Probability</h3>
+                <p>Your genetic weakness score</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 15%;"></div>
+                </div>
+                <p class="terminal-text">> PANIC_MODE: DISABLED</p>
+            </div>
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>📊 DCA Capability</h3>
+                <p>Can you actually buy the dip?</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 88%;"></div>
+                </div>
+                <p class="terminal-text">> DIP_BUYER: CONFIRMED</p>
+            </div>
+            <div class="discovery-card" onclick="animateCard(this)">
+                <h3>🔄 Mistake Correction</h3>
+                <p>Double down or cut losses genes</p>
+                <div class="meter">
+                    <div class="meter-fill" style="--fill: 100%;"></div>
+                </div>
+                <p class="terminal-text">> STRATEGY: ALWAYS_DOUBLE_DOWN</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="section" id="upload-section">
+        <h2 class="section-title">Upload Your Genetic Tendies</h2>
+        <div class="upload-zone" id="dropZone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);">
+            <p style="font-size: 4rem;">📂🧬🚀</p>
+            <p class="terminal-text">> DRAG_AND_DROP_YOUR_DNA.txt</p>
+            <p style="margin: 1rem 0;">or</p>
+            <input type="file" id="fileInput" accept=".txt,.csv,.zip" style="display: none;" onchange="handleFileSelect(event)">
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">CHOOSE FILE</button>
+            <p style="margin-top: 2rem; color: rgba(255,255,255,0.7);">Accepts: .txt, .csv, .zip (Max size: ∞ because we're going to the moon)</p>
+        </div>
+        <div class="loading-rocket" id="loadingRocket">🚀</div>
+    </section>
+
+    <!-- Results Preview -->
+    <section class="section">
+        <h2 class="section-title">Example Autist Profile</h2>
+        <div class="results-preview">
+            <div class="stonkience-score counter" id="scoreCounter">0</div>
+            <p style="text-align: center; font-size: 1.5rem; margin: 1rem 0;">STONKIENCE SCORE™</p>
+            
+            <div class="chart-container">
+                <div class="chart-line"></div>
+                <p class="terminal-text">> PORTFOLIO_TRAJECTORY: MOON_BOUND</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                <div style="text-align: center;">
+                    <p style="font-size: 2rem;">🦍</p>
+                    <p>APE STRENGTH: 9001</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 2rem;">🧠</p>
+                    <p>WRINKLES: 0</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 2rem;">🖍️</p>
+                    <p>CRAYONS EATEN: 420</p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="font-size: 2rem;">💰</p>
+                    <p>WIFE'S BF APPROVAL: 69%</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h3 style="font-size: 2rem; margin-bottom: 1rem;">TO THE MOON OR FOOD STAMPS 🚀</h3>
+        <div class="ticker-links">
+            <a href="#" class="ticker-link">$DNA</a>
+            <a href="#" class="ticker-link">$YOLO</a>
+            <a href="#" class="ticker-link">$ROPE</a>
+            <a href="#" class="ticker-link">$MOON</a>
+            <a href="#" class="ticker-link">$HODL</a>
+        </div>
+        <p class="disclaimer">
+            Not financial advice. We eat crayons. This is not real genetic analysis. 
+            Your wife's boyfriend is not liable for any losses. Diamond hands are not a medical condition. 
+            Please consult your local Wendy's dumpster for investment advice. Apes together strong.
+            SEC can't read this because it's too small. 🦍💎🙌
+        </p>
+    </footer>
+
+    <script>
+        // Sound effects (using Web Audio API for simple sounds)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(frequency, duration) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playCashRegister() {
+            playSound(1000, 0.1);
+            setTimeout(() => playSound(1200, 0.1), 100);
+            setTimeout(() => playSound(800, 0.2), 200);
+        }
+
+        function playRocketLaunch() {
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => playSound(100 + i * 50, 0.3), i * 100);
+            }
+        }
+
+        // Scroll to upload
+        function scrollToUpload() {
+            document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
+            playCashRegister();
+        }
+
+        // File handling
+        function dropHandler(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            
+            const dropZone = document.getElementById('dropZone');
+            dropZone.classList.remove('dragover');
+            
+            if (ev.dataTransfer.items) {
+                for (let i = 0; i < ev.dataTransfer.items.length; i++) {
+                    if (ev.dataTransfer.items[i].kind === 'file') {
+                        const file = ev.dataTransfer.items[i].getAsFile();
+                        processFile(file);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function dragOverHandler(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            document.getElementById('dropZone').classList.add('dragover');
+        }
+
+        function dragLeaveHandler(ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            document.getElementById('dropZone').classList.remove('dragover');
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+
+        function processFile(file) {
+            console.log('Processing file:', file.name);
+            
+            // Show loading animation
+            document.getElementById('loadingRocket').style.display = 'block';
+            
+            // Play rocket sound
+            playRocketLaunch();
+            
+            // Trigger confetti
+            createConfetti();
+            
+            // Simulate processing
+            setTimeout(() => {
+                document.getElementById('loadingRocket').style.display = 'none';
+                alert(`🚀 HOLY TENDIES! Your file "${file.name}" has been received!\n\n` +
+                      `Processing your genetic stonks...\n` +
+                      `Calculating autism levels...\n` +
+                      `Measuring diamond hand density...\n\n` +
+                      `YOUR RESULTS: You're 69% APE, 31% RETARD, 100% READY FOR MOON! 🌙💎🙌`);
+                
+                // Animate score counter
+                animateScore();
+            }, 3000);
+        }
+
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#00ff41', '#ff4500', '#9945ff', '#ffff00', '#ff00ff'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        // Animate cards
+        function animateCard(card) {
+            card.style.animation = 'none';
+            setTimeout(() => {
+                card.style.animation = 'bounce 0.5s ease';
+            }, 10);
+            playCashRegister();
+        }
+
+        // Animate score counter
+        function animateScore() {
+            const counter = document.getElementById('scoreCounter');
+            let current = 0;
+            const target = 42069;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        // Konami code Easter egg
+        let konamiCode = [];
+        const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join(',') === konamiPattern.join(',')) {
+                toTheMoon();
+            }
+        });
+
+        function toTheMoon() {
+            const moon = document.createElement('div');
+            moon.className = 'moon-animation';
+            moon.textContent = '🚀 TO THE MOON!!! 🌙';
+            document.body.appendChild(moon);
+            
+            playRocketLaunch();
+            createConfetti();
+            
+            setTimeout(() => moon.remove(), 3000);
+        }
+
+        // Random stock quotes on hover
+        const stockQuotes = [
+            "Buy high, sell low - This is the way",
+            "Stonks only go up 📈",
+            "Sir, this is a Wendy's",
+            "I'm not selling until $69,420",
+            "Wife's boyfriend approved ✅",
+            "Apes together strong 🦍",
+            "Diamond hands since birth 💎",
+            "My portfolio is 100% memes",
+            "DD means Double Down, right?",
+            "GUH!",
+            "Literally can't go tits up",
+            "Buying more on margin",
+            "What's an exit strategy?",
+            "Theta gang in shambles",
+            "Bears r fuk",
+            "Money printer go BRRRR"
+        ];
+
+        document.querySelectorAll('.discovery-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const quote = stockQuotes[Math.floor(Math.random() * stockQuotes.length)];
+                card.title = quote;
+            });
+        });
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            // Start the score counter animation after a delay
+            setTimeout(() => {
+                animateScore();
+            }, 2000);
+            
+            // Add some random floating emojis
+            setInterval(() => {
+                if (Math.random() > 0.9) {
+                    const emojis = ['💎', '🚀', '🦍', '📈', '🌙', '💰'];
+                    const emoji = document.createElement('div');
+                    emoji.style.position = 'fixed';
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = '100%';
+                    emoji.style.fontSize = '2rem';
+                    emoji.style.zIndex = '1';
+                    emoji.style.pointerEvents = 'none';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.animation = 'float 10s ease-out';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 10000);
+                }
+            }, 3000);
+        });
+
+        // Console Easter eggs
+        console.log('%c🚀 YOLO INTO THE CONSOLE! 🚀', 'font-size: 30px; color: #00ff41; font-weight: bold; text-shadow: 0 0 10px #00ff41;');
+        console.log('%c💎🙌 DIAMOND HANDS DETECTED 💎🙌', 'font-size: 20px; color: #9945ff;');
+        console.log('%cNot financial advice. We eat crayons.', 'font-size: 12px; color: #ff4500;');
+        console.log('Secret tendies code: TYPE "tendies" IN THE CONSOLE FOR SURPRISE');
+        
+        window.tendies = function() {
+            alert('🍗 TENDIES ACHIEVED! YOUR PORTFOLIO IS NOW 420.69% UP! 🍗');
+            createConfetti();
+            toTheMoon();
+        };
+    </script>
+</body>
+</html>
