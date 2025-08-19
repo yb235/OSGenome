@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, Sparkles, BrainCircuit, Trophy, BarChart3, Rocket, Users } from "lucide-react";
+import { Upload, Sparkles, BrainCircuit, Trophy, BarChart3, Rocket, Users, AlertCircle, CheckCircle, Download } from "lucide-react";
 import { motion } from "framer-motion";
 
-const mockStonkScore = {
-  riskApeIndex: 97,
-  disciplineFactor: 62,
-  diamondHandsDNA: 88,
-  panicSellPropensity: 11,
-  valueVersusMomentum: "Momentum YOLO Ape",
+// API configuration
+const API_BASE_URL = 'http://localhost:5000/api';
+
+// Default YOLO metrics for demo purposes
+const defaultYoloMetrics = {
+  riskApeIndex: 50,
+  disciplineFactor: 50,
+  diamondHandsDNA: 50,
+  panicSellPropensity: 50,
+  valueVersusMomentum: "Balanced Ape",
+  totalSnpsAnalyzed: 0,
+  significantFindings: 0
 };
 
 const leaderboard = [
@@ -21,8 +27,100 @@ const leaderboard = [
 ];
 
 export default function GeneticYOLOPage() {
-  const [uploaded, setUploaded] = useState(false);
-  const [showReport, setShowReport] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const [analysisStatus, setAnalysisStatus] = useState('idle'); // idle, uploading, analyzing, completed, error
+  const [yoloMetrics, setYoloMetrics] = useState(defaultYoloMetrics);
+  const [topFindings, setTopFindings] = useState([]);
+  const [error, setError] = useState(null);
+  const [fileName, setFileName] = useState('');
+  const fileInputRef = useRef(null);
+  
+  const showReport = analysisStatus === 'completed';
+  const isLoading = analysisStatus === 'uploading' || analysisStatus === 'analyzing';
+
+  // API integration functions
+  const handleFileSelect = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setFileName(file.name);
+    setAnalysisStatus('uploading');
+    setError(null);
+
+    try {
+      // Upload file
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const uploadResponse = await fetch(`${API_BASE_URL}/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorData = await uploadResponse.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+
+      const uploadResult = await uploadResponse.json();
+      setSessionId(uploadResult.session_id);
+      
+      // Start analysis
+      setAnalysisStatus('analyzing');
+      
+      const analysisResponse = await fetch(`${API_BASE_URL}/analyze/${uploadResult.session_id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          magnitude_threshold: 0.0,
+          // Uncomment the line below to limit analysis for testing
+          // limit: 1000
+        }),
+      });
+
+      if (!analysisResponse.ok) {
+        const errorData = await analysisResponse.json();
+        throw new Error(errorData.error || 'Analysis failed');
+      }
+
+      const analysisResult = await analysisResponse.json();
+      
+      // Update state with results
+      setYoloMetrics(analysisResult.yolo_metrics);
+      setTopFindings(analysisResult.top_findings || []);
+      setAnalysisStatus('completed');
+
+    } catch (err) {
+      setError(err.message);
+      setAnalysisStatus('error');
+    }
+  };
+
+  const downloadResults = async () => {
+    if (!sessionId) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/export/${sessionId}`);
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `genetic_yolo_analysis_${sessionId}.json`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      setError(`Download failed: ${err.message}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white p-6 font-mono">
@@ -69,23 +167,54 @@ export default function GeneticYOLOPage() {
             <p className="text-center text-white text-xl">
               Drop your <span className="text-pink-400">DNA file</span> and let's get freaky with the genome
             </p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,.gz"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
             <Button
-              onClick={() => {
-                setUploaded(true);
-                setTimeout(() => setShowReport(true), 2000);
-              }}
-              className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-xl text-lg"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isLoading}
+              className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-6 rounded-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Upload & Analyze 🔍
+              {isLoading ? 'Processing...' : 'Upload & Analyze'} 🔍
             </Button>
-            {uploaded && !showReport && (
+            {/* Status Messages */}
+            {analysisStatus === 'uploading' && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-green-900 text-green-300 p-4 mt-4 rounded-xl shadow-lg"
+                className="bg-blue-900 text-blue-300 p-4 mt-4 rounded-xl shadow-lg flex items-center gap-2"
               >
-                🧬 Stonk DNA Uploaded. Analysis in Progress... Welcome to the Stonkiverse.
+                <Upload className="w-5 h-5 animate-bounce" />
+                📁 Uploading {fileName}... Preparing for genetic YOLO analysis.
+              </motion.div>
+            )}
+            
+            {analysisStatus === 'analyzing' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-green-900 text-green-300 p-4 mt-4 rounded-xl shadow-lg flex items-center gap-2"
+              >
+                <BrainCircuit className="w-5 h-5 animate-spin" />
+                🧬 Analyzing your genetic YOLO potential... Checking for diamond hands DNA.
+              </motion.div>
+            )}
+            
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-red-900 text-red-300 p-4 mt-4 rounded-xl shadow-lg flex items-center gap-2"
+              >
+                <AlertCircle className="w-5 h-5" />
+                💥 Error: {error}
               </motion.div>
             )}
           </div>
@@ -105,31 +234,49 @@ export default function GeneticYOLOPage() {
           <ul className="space-y-3 text-lg text-white">
             <li>
               <BarChart3 className="inline-block mr-2 text-yellow-300" />
-              <strong>Risk Ape Index:</strong> {mockStonkScore.riskApeIndex}%
+              <strong>Risk Ape Index:</strong> {yoloMetrics.riskApeIndex}%
             </li>
             <li>
               <BarChart3 className="inline-block mr-2 text-yellow-300" />
-              <strong>Discipline Factor:</strong> {mockStonkScore.disciplineFactor}%
+              <strong>Discipline Factor:</strong> {yoloMetrics.disciplineFactor}%
             </li>
             <li>
               <BarChart3 className="inline-block mr-2 text-yellow-300" />
-              <strong>Diamond Hands DNA:</strong> {mockStonkScore.diamondHandsDNA}%
+              <strong>Diamond Hands DNA:</strong> {yoloMetrics.diamondHandsDNA}%
             </li>
             <li>
               <BarChart3 className="inline-block mr-2 text-yellow-300" />
-              <strong>Panic Sell Propensity:</strong> {mockStonkScore.panicSellPropensity}%
+              <strong>Panic Sell Propensity:</strong> {yoloMetrics.panicSellPropensity}%
             </li>
             <li>
               <Trophy className="inline-block mr-2 text-green-400" />
-              <strong>Strategy Fit:</strong> {mockStonkScore.valueVersusMomentum}
+              <strong>Strategy Fit:</strong> {yoloMetrics.valueVersusMomentum}
             </li>
           </ul>
           <div className="mt-6 flex justify-center animate-bounce">
             <Rocket className="w-10 h-10 text-pink-400" />
           </div>
-          <p className="text-center text-pink-300 mt-4 text-xl">
-            🚀 Confirmed YOLO Ape. Tendies inbound. 🍗📈
-          </p>
+          <div className="mt-6 text-center">
+            <p className="text-pink-300 text-lg mb-2">
+              📊 Analyzed {yoloMetrics.totalSnpsAnalyzed.toLocaleString()} SNPs
+            </p>
+            <p className="text-green-300 text-lg mb-2">
+              🔬 Found {yoloMetrics.significantFindings} significant genetic markers
+            </p>
+            <p className="text-pink-300 text-xl font-bold">
+              🚀 Confirmed YOLO Ape. Tendies inbound. 🍗📈
+            </p>
+            
+            {sessionId && (
+              <Button
+                onClick={downloadResults}
+                className="mt-4 bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2 mx-auto"
+              >
+                <Download className="w-4 h-4" />
+                Download Full Report
+              </Button>
+            )}
+          </div>
         </motion.div>
       )}
 
@@ -154,6 +301,67 @@ export default function GeneticYOLOPage() {
               </li>
             ))}
           </ul>
+        </motion.div>
+      )}
+
+      {/* Top Genetic Findings */}
+      {showReport && topFindings.length > 0 && (
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="max-w-4xl mx-auto mt-12 p-6 bg-zinc-800 rounded-xl border border-green-500"
+        >
+          <h2 className="text-2xl font-bold text-green-400 text-center mb-6 flex items-center justify-center gap-2">
+            <BrainCircuit className="w-6 h-6" />
+            🧬 Top Genetic Alpha Signals 📊
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {topFindings.slice(0, 6).map((finding, idx) => (
+              <div key={idx} className="bg-zinc-900 p-4 rounded-lg border border-purple-500">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-purple-400 font-bold text-lg">{finding.rsid}</span>
+                  <span className="text-yellow-300 font-bold">
+                    Mag: {finding.magnitude?.toFixed(1)}
+                  </span>
+                </div>
+                <div className="mb-2">
+                  <span className="text-white">Your DNA: </span>
+                  <span className="text-pink-400 font-mono">{finding.genotype}</span>
+                </div>
+                {finding.repute && (
+                  <div className="mb-2">
+                    <span className={`px-2 py-1 rounded text-xs font-bold ${
+                      finding.repute.toLowerCase().includes('good') 
+                        ? 'bg-green-900 text-green-300' 
+                        : finding.repute.toLowerCase().includes('bad')
+                        ? 'bg-red-900 text-red-300'
+                        : 'bg-yellow-900 text-yellow-300'
+                    }`}>
+                      {finding.repute}
+                    </span>
+                  </div>
+                )}
+                <p className="text-gray-300 text-sm">
+                  {finding.summary && finding.summary.length > 100 
+                    ? `${finding.summary.substring(0, 100)}...` 
+                    : finding.summary}
+                </p>
+                {finding.interpretation && (
+                  <p className="text-blue-300 text-sm mt-2 italic">
+                    Your genotype: {finding.interpretation.length > 80 
+                      ? `${finding.interpretation.substring(0, 80)}...` 
+                      : finding.interpretation}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+          {topFindings.length > 6 && (
+            <p className="text-center text-gray-400 mt-4">
+              And {topFindings.length - 6} more significant findings in your full report...
+            </p>
+          )}
         </motion.div>
       )}
 
