@@ -358,7 +358,7 @@ def too_large(e):
 if __name__ == '__main__':
     print("Starting Genetic YOLO API Server...")
     print(f"Upload folder: {os.path.abspath(UPLOAD_FOLDER)}")
-    print("Server will run on http://localhost:5000")
+    print("Server will run on http://localhost:5001")
     print("\nAPI Endpoints:")
     print("  GET  /api/health                  - Health check")
     print("  POST /api/upload                  - Upload genome file") 
@@ -367,4 +367,4 @@ if __name__ == '__main__':
     print("  GET  /api/export/<session_id>     - Export results as JSON")
     print("  GET  /api/sessions                - List all sessions")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
