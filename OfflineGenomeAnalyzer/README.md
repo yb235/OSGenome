@@ -4,11 +4,12 @@ A completely offline genome analysis tool that uses the pre-downloaded SNPedia 2
 
 ## Features
 
+- **🔥 High-Performance Parallel Processing**: Uses ALL CPU cores for maximum speed
 - **100% Offline**: All analysis is performed locally using the SNPedia2025.db database
 - **Privacy-First**: Your genetic data never leaves your computer
 - **23andMe Compatible**: Reads standard 23andMe genome files (.txt or .txt.gz)
 - **Comprehensive Analysis**: Analyzes over 111,000 SNPs from SNPedia
-- **Multiple Interfaces**: GUI, CLI, and programmatic API
+- **Multiple Speed Options**: Single-core, multi-core, and maximum performance modes
 - **Export Options**: JSON, TSV (Excel), and HTML reports
 
 ## Requirements
@@ -38,43 +39,58 @@ A completely offline genome analysis tool that uses the pre-downloaded SNPedia 2
 
 ## Usage
 
-### GUI Mode (Recommended)
+### 🔥 High-Performance GUI (Recommended)
 
+**Maximum Speed - Uses ALL CPU Cores:**
+```bash
+python final_gui.py
+```
+
+1. Click "Browse..." to select your genome file
+2. Choose analysis mode:
+   - **🔥 Test (10K SNPs)** - Quick test (recommended first run)
+   - **⚡ Medium (100K SNPs)** - Moderate analysis
+   - **🚀 Full Analysis (All 22M+ SNPs)** - Complete genome analysis
+3. Click "🔥 START ANALYSIS" 
+4. ⚠️ **Warning**: Full analysis will use ALL CPU cores and heat up your computer!
+
+**Simple Parallel Processing:**
+```bash
+python parallel_gui_analyzer.py
+```
+
+**Single-Core (Original):**
 ```bash
 python gui_analyzer.py
 ```
 
-1. Click "Browse..." to select your genome file
-2. Adjust analysis options:
-   - Minimum Magnitude: Filter results by significance (0 = show all)
-   - Limit Results: Limit number of SNPs analyzed (0 = analyze all)
-3. Click "Start Analysis"
-4. Export results as JSON, TSV, or HTML report
+### Command Line Modes
 
-### Command Line Mode
-
+**High-Performance Parallel:**
 ```bash
-# Analyze with default settings
-python offline_analyzer.py your_genome_file.txt
+python simple_parallel_analyzer.py "C:\path\to\your\genome_file.txt"
+```
 
-# Run example analysis (if no genome file provided)
-python offline_analyzer.py
+**Original Single-Core:**
+```bash
+python offline_analyzer.py "C:\path\to\your\genome_file.txt"
 ```
 
 ### Programmatic Usage
 
+**High-Performance Parallel:**
 ```python
-from offline_analyzer import OfflineGenomeAnalyzer
+from simple_parallel_analyzer import SimpleParallelAnalyzer
 
-# Initialize analyzer
-analyzer = OfflineGenomeAnalyzer()
+# Initialize high-performance analyzer (uses all CPU cores)
+analyzer = SimpleParallelAnalyzer()
 
 # Load genome file
 genome_stats = analyzer.load_genome("your_genome_file.txt")
 print(f"Loaded {genome_stats['total_snps']} SNPs")
 
-# Analyze all SNPs
-results = analyzer.analyze_all(magnitude_threshold=0.0)
+# Analyze with parallel processing
+results = analyzer.analyze_parallel(magnitude_threshold=0.0)
 
 # Get significant SNPs
 significant = analyzer.get_significant_snps(min_magnitude=2.0)
@@ -84,8 +100,21 @@ for snp in significant[:10]:
 # Export results
 analyzer.export_results("results.json", format='json')
 analyzer.export_results("results.tsv", format='tsv')
+```
 
-# Clean up
+**Original Single-Core:**
+```python
+from offline_analyzer import OfflineGenomeAnalyzer
+
+# Initialize single-core analyzer
+analyzer = OfflineGenomeAnalyzer()
+
+# Load and analyze (slower but uses less CPU)
+genome_stats = analyzer.load_genome("your_genome_file.txt")
+results = analyzer.analyze_all(magnitude_threshold=0.0)
+
+# Export and cleanup
+analyzer.export_results("results.json", format='json')
 analyzer.close()
 ```
 
@@ -130,22 +159,48 @@ The SNPedia data is licensed under CC-BY-NC-SA 3.0. This means:
 - Non-commercial use only
 - Share-alike required for derivatives
 
+## Performance Comparison
+
+| Version | Speed | CPU Usage | Best For |
+|---------|-------|-----------|----------|
+| **🔥 final_gui.py** | **Fastest** | **ALL cores (will heat laptop!)** | **Large genomes, max speed** |
+| parallel_gui_analyzer.py | Very Fast | Multi-core | Balanced performance |
+| gui_analyzer.py | Moderate | Single-core | Light usage, older computers |
+| simple_parallel_analyzer.py | **Fastest CLI** | **ALL cores** | **Command line power users** |
+| offline_analyzer.py | Moderate | Single-core | Basic analysis |
+
+### Speed Estimates (22.4M SNP genome):
+- **🔥 High-Performance**: ~10-30 minutes (ALL CPU cores)
+- Parallel: ~45-90 minutes (multi-core)
+- Single-core: ~4-8 hours (one core)
+
 ## Comparison with Original OSGenome
 
-| Feature | Original OSGenome | Offline Analyzer |
+| Feature | Original OSGenome | New Offline Analyzer |
 |---------|------------------|------------------|
 | Internet Required | Yes (web scraping) | No (offline DB) |
-| Speed | Slow (API calls) | Fast (local DB) |
+| Speed | Slow (API calls) | **🔥 Fast (parallel local DB)** |
 | SNP Coverage | Limited by crawl | 111,727 SNPs |
 | Privacy | Good | Excellent |
+| CPU Usage | Low | **🔥 Configurable (1 to ALL cores)** |
 | Updates | Real-time | Static snapshot |
 
 ## Troubleshooting
 
 1. **"Database not found"**: Ensure SNPedia2025.db is in ../SNPedia2025/
 2. **GUI doesn't start**: Install tkinter: `pip install tk`
-3. **Memory issues**: Use the limit parameter to process in batches
-4. **No results**: Check your genome file format matches 23andMe standard
+3. **🔥 Laptop overheating**: This is normal with high-performance mode! Use Test mode first, ensure good ventilation
+4. **CPU cores not all used**: Try smaller batch sizes or use final_gui.py instead
+5. **Memory issues**: Use the limit parameter to process in batches, or reduce number of CPU cores
+6. **No results**: Check your genome file format matches 23andMe standard
+7. **Analysis too slow**: Use final_gui.py or simple_parallel_analyzer.py for maximum speed
+
+### Performance Tips
+
+- **Start with Test mode** (10K SNPs) to verify everything works
+- **Monitor CPU temperature** during full analysis
+- **Use all available RAM** - close other applications during analysis
+- **For maximum speed**: Use final_gui.py with all CPU cores enabled
 
 ## Support
 
